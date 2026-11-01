@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { SignInButton, SignedIn, SignedOut, UserButton, useAuth } from '@clerk/nextjs';
 import {
   Plus, MessageSquare, Search, Edit2, Edit3, Trash2, Share2, Settings, User, 
   ChevronDown, Send, Square, Sun, Moon, Laptop, Globe, Paperclip, Check, Copy,
@@ -304,6 +305,8 @@ function useLocalStorage<T>(
 // --- MAIN REACT COMPONENT ---
 
 export default function App() {
+  const { isLoaded, isSignedIn } = useAuth()
+
   // Persistence state
   const [chats, setChats] = useLocalStorage<Chat[]>('velora_ai_chats', []);
   const [activeChatId, setActiveChatId] = useLocalStorage<string | null>('velora_ai_active_id', null);
@@ -794,6 +797,28 @@ export default function App() {
 
     return categories;
   }, [chats]);
+
+  if (!isLoaded) {
+    return <div className="min-h-screen bg-[#0d0e11]" aria-busy="true" />
+  }
+
+  if (!isSignedIn) {
+    return (
+      <main className="min-h-screen bg-[#0d0e11] text-white flex items-center justify-center p-6">
+        <section className="w-full max-w-md rounded-3xl border border-zinc-800 bg-[#14161c] p-8 text-center shadow-2xl">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-lime-400/10 text-lime-400">
+            <Sparkles className="h-7 w-7" aria-hidden="true" />
+          </div>
+          <h1 className="text-2xl font-semibold tracking-tight">Sign in to use Velora AI</h1>
+          <p className="mt-3 text-sm leading-6 text-zinc-400">Create an account or continue with a supported provider to access the AI workspace.</p>
+          <SignInButton mode="modal">
+            <button className="mt-7 w-full rounded-xl bg-lime-500 px-4 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-lime-400 focus:outline-none focus:ring-2 focus:ring-lime-300 focus:ring-offset-2 focus:ring-offset-[#14161c]">Continue with Google, GitHub, Apple, or email</button>
+          </SignInButton>
+          <p className="mt-4 text-xs text-zinc-500">Providers are configured in your Clerk dashboard.</p>
+        </section>
+      </main>
+    )
+  }
 
   const selectedModelObj = VELORA_MODELS.find((m) => m.id === selectedModelId) || VELORA_MODELS[0];
   const selectedPersonaObj = VELORA_PERSONAS.find((p) => p.id === activePersonaId) || VELORA_PERSONAS[0];
