@@ -1,3 +1,4 @@
+import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
 const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct'
@@ -115,6 +116,9 @@ function getCompatibleProviderConfig(provider: CompatibleProvider) {
 }
 
 export async function GET(request: Request) {
+  const { userId } = await auth()
+  if (!userId) return NextResponse.json({ error: 'Sign in required.' }, { status: 401 })
+
   const providerParam = new URL(request.url).searchParams.get('provider') || 'cloudflare'
   if (!isProvider(providerParam)) {
     return NextResponse.json({ error: 'Unsupported AI provider.' }, { status: 400 })
@@ -124,6 +128,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const { userId } = await auth()
+  if (!userId) return NextResponse.json({ error: 'Sign in required.' }, { status: 401 })
+
   let body: unknown
   try {
     body = await request.json()
