@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 const DEFAULT_MODEL = '@cf/meta/llama-3.1-8b-instruct'
 const REQUEST_TIMEOUT_MS = 180_000
-const AQUIN_ENDPOINT = process.env.AQUIN_PROD_ENDPOINT || 'https://aquin.prod.page/api/chat'
+const AQUIN_ENDPOINT = process.env.AQUIN_PROD_ENDPOINT || 'https://aquin.prod.page/v1'
 
 type ChatMessage = {
   role: 'system' | 'user' | 'assistant';
