@@ -78,15 +78,6 @@ const VELORA_MODELS = [
     color: 'text-sky-400'
   },
   {
-    id: 'gpt-oss-120b',
-    provider: 'cerebras',
-    name: 'Velora Core',
-    description: 'Balanced open-weight assistant',
-    badge: 'Velora',
-    icon: Brain,
-    color: 'text-emerald-400'
-  },
-  {
     id: 'qwen-3.8-27b',
     provider: 'cerebras',
     name: 'Velora Focus',
