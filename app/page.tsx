@@ -995,12 +995,10 @@ export default function App() {
               className="flex items-center justify-between w-full p-2 rounded-xl hover:bg-zinc-800/60 transition-colors"
             >
               <div className="flex items-center gap-2.5 overflow-hidden">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-lime-600 to-blue-500 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-lime-500/20">
-                  VA
-                </div>
+                <UserButton />
                 <div className="flex flex-col text-left truncate">
                   <span className="text-xs font-semibold text-gray-200 truncate">Personal workspace</span>
-                  <span className="text-[10px] text-lime-400 font-mono">Saved in this browser</span>
+                  <span className="text-[10px] text-lime-400 font-mono">Clerk-secured session</span>
                 </div>
               </div>
               <MoreHorizontal className="w-4 h-4 text-gray-400" />
