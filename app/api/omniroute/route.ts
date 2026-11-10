@@ -125,7 +125,7 @@ function getCompatibleProviderConfig(provider: CompatibleProvider) {
       url: 'https://api.groq.com/openai/v1/chat/completions',
     },
     openrouter: {
-      apiKey: process.env.OPENROUTER_API_KEY,
+      apiKey: process.env.OPENROUTER_API_KEY || process.env.OMNIROUTE_API_KEY,
       url: 'https://openrouter.ai/api/v1/chat/completions',
     },
     cerebras: {
