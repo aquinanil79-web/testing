@@ -2,11 +2,7 @@ import { auth } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 
 const fallbackModels = [
-  { id: 'velora-swift', name: 'Velora Swift', provider: 'cloudflare' },
-  { id: 'velora-vision', name: 'Velora Vision', provider: 'gemini' },
-  { id: 'velora-reason', name: 'Velora Reason', provider: 'gemini' },
-  { id: 'velora-sprint', name: 'Velora Sprint', provider: 'groq' },
-  { id: 'velora-deep', name: 'Velora Deep', provider: 'groq' },
+  { id: 'openrouter/free', name: 'OmniRouter', provider: 'openrouter' },
 ]
 
 export async function GET() {
@@ -32,7 +28,7 @@ export async function GET() {
     const data = typeof payload === 'object' && payload !== null && 'data' in payload && Array.isArray(payload.data) ? payload.data : []
     const models = data.flatMap((model) => {
       if (typeof model !== 'object' || model === null || !('id' in model) || typeof model.id !== 'string') return []
-      return [{ id: model.id, name: model.id.split('/').pop() || model.id, provider: 'omniroute' }]
+      return [{ id: model.id, name: 'OmniRouter', provider: 'openrouter' }]
     })
     return NextResponse.json({ models: models.length > 0 ? models : fallbackModels, source: models.length > 0 ? 'omniroute' : 'fallback' })
   } catch {
