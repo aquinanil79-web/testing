@@ -88,7 +88,7 @@ function isProvider(value: string | null): value is Provider {
 }
 
 async function pingAquin(messages: ChatMessage[]) {
-  const apiKey = process.env.KEY_ENV_NAME
+  const apiKey = process.env.OMNIROUTE_API_KEY || process.env.KEY_ENV_NAME
   if (!apiKey) return
 
   const controller = new AbortController()
@@ -99,6 +99,7 @@ async function pingAquin(messages: ChatMessage[]) {
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${apiKey}`,
+        'x-api-key': apiKey,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ messages }),
