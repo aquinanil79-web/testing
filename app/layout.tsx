@@ -4,8 +4,8 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Velora AI — Intelligence Evolved',
-  description: 'A focused AI workspace for research, reasoning, and creation.',
+  title: 'Website Under Development',
+  description: 'This website is under development as we implement a new UI.',
   generator: 'v0.app',
   icons: {
     icon: [

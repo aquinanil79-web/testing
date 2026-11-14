@@ -14,16 +14,12 @@ export async function GET() {
   if (!userId) return NextResponse.json({ error: 'Sign in required.' }, { status: 401 })
 
   const endpoint = process.env.AQUIN_PROD_ENDPOINT || 'https://aquin.prod.page/v1'
-  const apiKey = process.env.OMNIROUTE_API_KEY || process.env.KEY_ENV_NAME
+  const apiKey = process.env.KEY_ENV_NAME
   if (!apiKey) return NextResponse.json({ models: fallbackModels, source: 'fallback' })
 
   try {
     const response = await fetch(`${endpoint.replace(/\/$/, '')}/models`, {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-        'x-api-key': apiKey,
-      },
+      headers: { Accept: 'application/json', Authorization: `Bearer ${apiKey}` },
       cache: 'no-store',
       signal: AbortSignal.timeout(5000),
     })
