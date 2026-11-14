@@ -5,7 +5,7 @@ import { SignInButton, SignedIn, SignedOut, UserButton, useAuth } from '@clerk/n
 import {
   Plus, MessageSquare, Search, Edit2, Edit3, Trash2, Share2, Settings, User, 
   ChevronDown, Send, Square, Sun, Moon, Laptop, Globe, Paperclip, Check, Copy,
-  RotateCcw, ThumbsUp, ThumbsDown, Volume2, VolumeX, Sparkles,
+  RotateCcw, ThumbsUp, ThumbsDown, Volume2, VolumeX, Sparkles, Zap, Brain,
   Menu, X, Sliders, CheckCircle2, ShieldAlert, FileText, Image as ImageIcon,
   ArrowUp, MoreHorizontal, LogOut, Info, ExternalLink, Terminal, Code, HelpCircle,
   Pin, Download, Eye, Play, Cpu, ChevronRight, Compass
@@ -15,12 +15,84 @@ import {
 
 const VELORA_MODELS = [
   {
+    id: '@cf/meta/llama-3.1-8b-instruct',
+    provider: 'cloudflare',
+    name: 'Velora Swift',
+    description: 'Fast general-purpose assistant',
+    badge: 'Velora',
+    icon: Sparkles,
+    color: 'text-lime-400'
+  },
+  {
+    id: 'gemini-3.8-flash',
+    provider: 'gemini',
+    name: 'Velora Vision',
+    description: 'Fast multimodal assistant',
+    badge: 'Velora',
+    icon: Zap,
+    color: 'text-blue-400'
+  },
+  {
+    id: 'gemini-3.1-pro-preview',
+    provider: 'gemini',
+    name: 'Velora Reason',
+    description: 'Advanced reasoning and coding',
+    badge: 'Velora',
+    icon: Brain,
+    color: 'text-cyan-400'
+  },
+  {
+    id: 'gemini-3.5-flash-lite',
+    provider: 'gemini',
+    name: 'Velora Lite',
+    description: 'Efficient assistant for everyday tasks',
+    badge: 'Velora',
+    icon: Cpu,
+    color: 'text-cyan-400'
+  },
+  {
+    id: 'openai/gpt-oss-20b',
+    provider: 'groq',
+    name: 'Velora Sprint',
+    description: 'Fast assistant for chat and coding',
+    badge: 'Velora',
+    icon: Zap,
+    color: 'text-orange-400'
+  },
+  {
+    id: 'openai/gpt-oss-120b',
+    provider: 'groq',
+    name: 'Velora Deep',
+    description: 'Stronger reasoning for complex tasks',
+    badge: 'Velora',
+    icon: Brain,
+    color: 'text-orange-400'
+  },
+  {
     id: 'openrouter/free',
     provider: 'openrouter',
-    name: 'OmniRouter',
-    description: 'Automatically routes requests to the best available model',
-    badge: 'OmniRouter',
+    name: 'Velora Auto',
+    description: 'Automatically selects an available model',
+    badge: 'Velora',
     icon: Globe,
+    color: 'text-sky-400'
+  },
+  {
+    id: 'qwen-3.8-27b',
+    provider: 'cerebras',
+    name: 'Velora Focus',
+    description: 'Reasoning assistant with tool support',
+    badge: 'Velora',
+    icon: Cpu,
+    color: 'text-emerald-400'
+  },
+  {
+    id: 'nvidia/llama-3.1-nemotron-70b-instruct',
+    provider: 'nvidia',
+    name: 'Velora Pro',
+    description: 'Polished assistant for helpful responses',
+    badge: 'Velora',
+    icon: Brain,
     color: 'text-lime-400'
   },
 ];
